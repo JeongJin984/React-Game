@@ -10,49 +10,54 @@
         <div id ="root"></div> <!--<div id="root"><button>Like</button></div>-->
         <script type = "text/babel">
             class GuGuDan extends React.Component{
-                constructor(props){
-                    super(props);
-                    this.state ={
-                        first: Math.ceil(Math.random() * 9),
-                        second: Math.ceil(Math.random() * 9),
-                        value: '',
-                        result: '',
-                    };
-                }
-
+                state ={
+                    first: Math.ceil(Math.random() * 9),
+                    second: Math.ceil(Math.random() * 9),
+                    value: '',
+                    result: '',
+                };
+                
+                //무조건 화살표 함수
                 onSubmit = (e)=>{
                                 e.preventDefault();
                                 if(parseInt(this.state.value)===this.state.first * this.state.second){
-                                    this.setState({
-                                        result: this.state.value + '정답',
+                                    this.setState((prevState) =>{
+                                        return{
+                                        result: prevState.value + '정답',
                                         first: Math.ceil(Math.random() * 9),
                                         second: Math.ceil(Math.random() * 9),
                                         value: '',
-                                    })
+                                        };
+                                    });
+                                    this.input.focus();
                                 }
                                 else{
                                     this.setState({
                                         result: '땡',
                                         value: '',
                                     });
+                                    this.input.focus();
                                 }
                             };
                 onChange = (e) => {
                     this.setState({ value: e.target.value});
                 };
+                focus = (c)=>{this.input =c;};
+                input;
                 //화면 표시
                 render(){
                     return (
-                        <div>
+                        <React.Fragment>
                             <div>{this.state.first} 곱하기 {this.state.second}</div>
                             <form onSubmit = {this.onSubmit}>
-                                <input type ="number" value = {this.state.value} onChange ={this.onChange}/>
+                                <input ref={this.focus}type ="number" value = {this.state.value} onChange ={this.onChange}/>
                                 <button> 입력! </button>
                             </form>
                             <div>{this.state.result}</div>
-                        </div>
+                        </React.Fragment>
                     );                
-                } 
+                }
+
             }
         </script>
         <script type = "text/babel">
