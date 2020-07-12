@@ -11,7 +11,6 @@
             src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
         ></script>
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
         <script type="text/babel">
             'use strict';
             const GuGuDan = () => {
@@ -24,7 +23,7 @@
                 const onSubmitForm = (event) => {
                     event.preventDefault();
                     if (parseInt(value) === first * second) {
-                        setResult('정답');
+                        setResult('정답 : ' + value);
                         setFirst(Math.ceil(Math.random() * 9));
                         setSecond(Math.ceil(Math.random() * 9));
                         setValue('');
@@ -45,7 +44,7 @@
                                 ref={inputEl}
                                 type="number"
                                 value={value}
-                                onChange={(event) => setValue(e.target.value)}
+                                onChange={(event) => setValue(event.target.value)}
                             />
                             <button>입력!</button>
                         </form>
