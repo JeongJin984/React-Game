@@ -2,10 +2,10 @@ const React=require('react');
 const {useState, useRef} = React;
 
 const GuGuDan = () => {
-    const [first, setFirst] = useState(Math.ceil(Math.random()*9));
-    const [second, setSecond] = useState(Math.ceil(Math.random()*9));
-    const [value, setValue] = useState('');
-    const [result, setResult] = useState('');
+    const [first, setFirst] = React.useState(Math.ceil(Math.random()*9));
+    const [second, setSecond] = React.useState(Math.ceil(Math.random()*9));
+    const [value, setValue] = React.useState('');
+    const [result, setResult] = React.useState('');
     const inputRef = useRef(null);
 
     const onChangeInput = (e) => {
@@ -23,7 +23,7 @@ const GuGuDan = () => {
                     } else{
                         setResult(first +'*'+ second + '=' + value + '(X)');
                         setValue('');
-                        inputRef,current.focus();
+                        inputRef.current.focus();
                     }
     };
 
