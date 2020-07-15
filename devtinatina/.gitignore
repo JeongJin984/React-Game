@@ -5,3 +5,5 @@ node_modules/
 *.json
 
 webpack.config.js
+
+.DS_Store
