@@ -23,10 +23,13 @@ const RSP = () => {
     const [result, setResult]=useState('')
     const [imgCoord, setImgCoord]=useState(rspCoords.바위)
     const interval = useRef()
-
+    const overload = useRef(false) 
+    
     useEffect(()=> {
+        console.log('useEffect setting')
         interval.current = setInterval(changeHand, 100)
         return () => {
+            console.log('useEffect clear')
             clearInterval(interval.current)
         }
     }, [imgCoord])
@@ -43,23 +46,33 @@ const RSP = () => {
 
     const onClickBtn = (choice) => ()=> {
         clearInterval(interval.current)
+        console.log('Btn Clear')
+
         const myScore = scores[choice]
         const cpuScore = scores[computerChoice(imgCoord)]
         const diff = myScore - cpuScore
-        if(diff===0){
-            setResult('비김')
-        }else if ([-1, 2].includes(diff)){
-            setResult('이김')
-            setScore((preScore)=>preScore+1)
-        }else {
-            setResult('짐')
-            setScore((preScore)=>preScore-1)
-        }
 
-        setTimeout(()=> {
-            clearTimeout(interval.current)
-            interval.current = setInterval(changeHand, 100)
-        }, 1000)
+        if(overload.current===false)
+        {
+            overload.current=true
+            if(diff===0){
+                setResult('비김')
+            }else if ([-1, 2].includes(diff)){
+                setResult('이김')
+                setScore((preScore)=>preScore+1)
+            }else {
+                setResult('짐')
+                setScore((preScore)=>preScore-1)
+            }
+
+            setTimeout(()=> {
+                overload.current = false
+                clearTimeout(interval.current)
+                console.log('setTime Clear')
+                interval.current = setInterval(changeHand, 100)
+                console.log('setTime setting')
+            }, 1000)
+        }
     }
 
     return(
